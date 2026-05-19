@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title><%= post.title %></title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<a href="/" class="topbutton">
+← 戻る
+</a>
+
+<div class="post">
+
+<h1>
+<%= post.title %>
+</h1>
+
+<div class="meta">
+
+<a
+href="/user/<%= post.authorEmail %>"
+class="authorlink"
+>
+
+<%= post.author %>
+
+</a>
+
+|
+<%= post.createdAt %>
+
+</div>
+
+<div class="content">
+
+<%- marked.parse(post.content) %>
+
+</div>
+
+<div class="actions">
+
+<form action="/like/<%= post.id %>" method="POST">
+
+<button class="likebutton">
+
+❤
+<%= getLikeCount(post.id) %>
+
+</button>
+
+</form>
+
+</div>
+
+<form action="/comment/<%= post.id %>" method="POST">
+
+<input
+type="text"
+name="content"
+placeholder="コメント"
+required
+>
+
+<button>
+送信
+</button>
+
+</form>
+
+<% if(
+user &&
+(
+user.email === post.authorEmail ||
+isAdmin(user)
+)
+){ %>
+
+<form action="/delete/<%= post.id %>" method="POST">
+
+<button class="delete">
+削除
+</button>
+
+</form>
+
+<% } %>
+
+</div>
+
+<h2 class="commenttitle">
+コメント
+</h2>
+
+<% comments.forEach(comment => { %>
+
+<div class="commentbox">
+
+<div class="commenttop">
+
+<div class="commentauthor">
+
+<%= comment.author %>
+
+</div>
+
+<% if(
+user &&
+(
+comment.author === user.name ||
+user.email === post.authorEmail ||
+isAdmin(user)
+)
+){ %>
+
+<form
+action="/comment-delete/<%= comment.id %>"
+method="POST"
+>
+
+<button class="commentdelete">
+削除
+</button>
+
+</form>
+
+<% } %>
+
+</div>
+
+<div class="commentcontent">
+
+<%= comment.content %>
+
+</div>
+
+</div>
+
+<% }) %>
+
+</body>
+</html>

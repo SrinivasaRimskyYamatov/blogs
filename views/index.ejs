@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>古風掲示板</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header>
+
+<h1>
+古風掲示板
+</h1>
+
+<div class="topbar">
+
+<% if(!user){ %>
+
+<a href="/login" class="topbutton">
+ログイン
+</a>
+
+<a href="/register" class="topbutton">
+登録
+</a>
+
+<% } else { %>
+
+<a href="/write" class="writebutton">
+記事を書く
+</a>
+
+<a
+href="/user/<%= user.email %>"
+class="topbutton"
+>
+マイページ
+</a>
+
+<a href="/logout" class="topbutton">
+ログアウト
+</a>
+
+<% } %>
+
+</div>
+
+</header>
+
+<% posts.forEach(post => { %>
+
+<div class="post">
+
+<h2>
+
+<a
+href="/post/<%= post.id %>"
+class="titlelink"
+>
+
+<%= post.title %>
+
+</a>
+
+</h2>
+
+<div class="meta">
+
+<a
+href="/user/<%= post.authorEmail %>"
+class="authorlink"
+>
+
+<%= post.author %>
+
+</a>
+
+|
+<%= post.createdAt %>
+
+</div>
+
+<div class="actions">
+
+<form action="/like/<%= post.id %>" method="POST">
+
+<button class="likebutton">
+
+❤
+<%= getLikeCount(post.id) %>
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+<% }) %>
+
+</body>
+</html>

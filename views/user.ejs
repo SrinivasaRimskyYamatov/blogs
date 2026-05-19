@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ユーザー</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<a href="/" class="topbutton">
+← 戻る
+</a>
+
+<h1>
+ユーザーページ
+</h1>
+
+<div class="profilebox">
+
+<h2>
+<%= profileEmail %>
+</h2>
+
+<div class="content">
+
+<%- marked.parse(profileText) %>
+
+</div>
+
+<% if(
+user &&
+user.email === profileEmail
+){ %>
+
+<form action="/profile" method="POST">
+
+<textarea
+name="profile"
+placeholder="Markdownでプロフィール"
+>
+
+<%= profileText %>
+
+</textarea>
+
+<button>
+プロフィール保存
+</button>
+
+</form>
+
+<% } %>
+
+</div>
+
+<h2>
+投稿記事
+</h2>
+
+<% posts.forEach(post => { %>
+
+<div class="post">
+
+<h2>
+
+<a
+href="/post/<%= post.id %>"
+class="titlelink"
+>
+
+<%= post.title %>
+
+</a>
+
+</h2>
+
+</div>
+
+<% }) %>
+
+</body>
+</html>

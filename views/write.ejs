@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>記事作成</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<h1>
+記事を書く
+</h1>
+
+<form action="/post" method="POST">
+
+<input
+type="text"
+name="title"
+placeholder="題名"
+required
+>
+
+<textarea
+name="content"
+placeholder="Markdown対応"
+required
+></textarea>
+
+<button class="writebutton">
+投稿
+</button>
+
+</form>
+
+</body>
+</html>
